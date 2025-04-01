@@ -1,0 +1,21 @@
+{
+  "name": "playwright-bdd-framework",
+  "version": "1.0.0",
+  "description": "Playwright BDD Framework with POM",
+  "scripts": {
+    "test": "cucumber-js",
+    "test:parallel": "cucumber-js --parallel 2",
+    "report": "node cucumber-html-report.js"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^10.3.1",
+    "@playwright/test": "^1.42.1",
+    "cucumber-html-reporter": "^7.1.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+} 
