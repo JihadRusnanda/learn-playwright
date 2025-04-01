@@ -1,98 +1,49 @@
 # Playwright BDD Framework
 
-This is a test automation framework built with Playwright, implementing BDD (Behavior Driven Development) and Page Object Model (POM) patterns.
+A modern test automation framework using Playwright with Cucumber for Behavior-Driven Development (BDD).
 
-## Project Structure
+## Features
 
-```
-├── .github/
-│   └── workflows/
-│       └── playwright.yml    # GitHub Actions workflow
-├── src/
-│   ├── features/            # Cucumber feature files
-│   ├── pages/              # Page Object Models
-│   └── step-definitions/   # Cucumber step definitions
-├── cucumber.js             # Cucumber configuration
-├── package.json           # Project dependencies
-└── tsconfig.json         # TypeScript configuration
-```
+- 🎭 Playwright for browser automation
+- 🥒 Cucumber for BDD testing
+- 📝 TypeScript support
+- 🎨 Beautiful HTML reports
+- 📹 Video recording of test runs
+- 🔍 Screenshot capture on failure
+- 🎯 Parallel test execution
+- 🔄 CI/CD integration with GitHub Actions
 
 ## Prerequisites
 
-- Node.js (v20 or higher)
-- npm (v9 or higher)
+- Node.js (v16 or higher)
+- npm or yarn
+- VS Code (recommended)
 
-## Setup
+## Installation
 
-1. Clone the repository
+1. Clone the repository:
+```bash
+git clone https://github.com/JihadRusnanda/learn-playwright.git
+cd learn-playwright
+```
+
 2. Install dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
+
 3. Install Playwright browsers:
-   ```bash
-   npx playwright install
-   ```
-
-## Running Tests
-
-- Run all tests:
-  ```bash
-  npm run test
-  ```
-
-- Run tests in parallel:
-  ```bash
-  npm run test:parallel
-  ```
-
-- Generate HTML report:
-  ```bash
-  npm run report
-  ```
-
-## Writing Tests
-
-1. Create feature files in `src/features/`
-2. Create step definitions in `src/step-definitions/`
-3. Create page objects in `src/pages/`
-
-## CI/CD
-
-The framework includes GitHub Actions workflow that runs tests on:
-- Push to main/master branch
-- Pull requests to main/master branch
-
-## Best Practices
-
-- Use Page Object Model for better maintainability
-- Write descriptive feature files
-- Keep step definitions clean and reusable
-- Use TypeScript for better type safety
+```bash
+npx playwright install
+```
 
 ## VS Code Setup for Cucumber
 
-### Required Extensions
-1. Cucumber (Gherkin) Full Support
-   - Extension ID: `Alexander Krechik.cucumberautocomplete`
-   - Provides step definition navigation and autocomplete
+1. Install required extensions:
+   - Cucumber (Gherkin) Full Support (Extension ID: `Alexander Krechik.cucumberautocomplete`)
+   - Cucumber for VS Code (Extension ID: `stevejpurves.cucumber`)
 
-2. Cucumber for VS Code
-   - Extension ID: `stevejpurves.cucumber`
-   - Provides syntax highlighting and step definition navigation
-
-### Configuration
-1. Create a `.vscode` directory in your project root:
-   ```bash
-   mkdir .vscode
-   ```
-
-2. Copy the example settings file:
-   ```bash
-   cp .vscode/settings.json.example .vscode/settings.json
-   ```
-
-The settings file includes:
+2. Create `.vscode/settings.json`:
 ```json
 {
     "cucumberautocomplete.steps": [
@@ -111,8 +62,70 @@ The settings file includes:
 }
 ```
 
-### Features
-- Click on steps in feature files to navigate to step definitions
-- Get autocomplete suggestions while typing steps
-- Syntax highlighting for Gherkin keywords
-- Step definition validation
+## Project Structure
+
+```
+├── src/
+│   ├── features/          # Cucumber feature files
+│   ├── step-definitions/  # Step definition files
+│   ├── pages/            # Page Object Models
+│   └── support/          # Support files and world.ts
+├── cucumber.js           # Cucumber configuration
+├── playwright.config.ts  # Playwright configuration
+└── package.json         # Project dependencies
+```
+
+## Running Tests
+
+1. Run all tests:
+```bash
+npm test
+```
+
+2. Run specific feature:
+```bash
+npm test -- src/features/login.feature
+```
+
+3. Run with specific tags:
+```bash
+npm test -- --tags @smoke
+```
+
+4. Run in headed mode:
+```bash
+npm run test:headed
+```
+
+5. Run in debug mode:
+```bash
+npm run test:debug
+```
+
+## Test Reports
+
+After test execution, you can find:
+- HTML reports in `cucumber-report.html`
+- Test videos in `videos/` directory
+- Screenshots in `screenshots/` directory (on test failure)
+
+## GitHub Actions
+
+The project includes a GitHub Actions workflow that:
+- Runs tests on push to main branch
+- Runs tests on pull requests
+- Generates and uploads test reports as artifacts
+- Supports parallel test execution
+- Uses Node.js 18.x
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
