@@ -69,3 +69,50 @@ The framework includes GitHub Actions workflow that runs tests on:
 - Write descriptive feature files
 - Keep step definitions clean and reusable
 - Use TypeScript for better type safety
+
+## VS Code Setup for Cucumber
+
+### Required Extensions
+1. Cucumber (Gherkin) Full Support
+   - Extension ID: `Alexander Krechik.cucumberautocomplete`
+   - Provides step definition navigation and autocomplete
+
+2. Cucumber for VS Code
+   - Extension ID: `stevejpurves.cucumber`
+   - Provides syntax highlighting and step definition navigation
+
+### Configuration
+1. Create a `.vscode` directory in your project root:
+   ```bash
+   mkdir .vscode
+   ```
+
+2. Copy the example settings file:
+   ```bash
+   cp .vscode/settings.json.example .vscode/settings.json
+   ```
+
+The settings file includes:
+```json
+{
+    "cucumberautocomplete.steps": [
+        "src/step-definitions/*.ts"
+    ],
+    "cucumberautocomplete.syncfeatures": "src/features/*.feature",
+    "cucumberautocomplete.skipDocStringsFormat": true,
+    "cucumberautocomplete.strictGherkinCompletion": true,
+    "cucumberautocomplete.strictGherkinValidation": true,
+    "cucumberautocomplete.customParameters": [
+        {
+            "parameter": "{word}",
+            "value": "\\w+"
+        }
+    ]
+}
+```
+
+### Features
+- Click on steps in feature files to navigate to step definitions
+- Get autocomplete suggestions while typing steps
+- Syntax highlighting for Gherkin keywords
+- Step definition validation
