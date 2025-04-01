@@ -14,8 +14,7 @@ export class CustomWorld extends World {
         this.browser = await chromium.launch({
             headless: false,
             args: ['--start-maximized'],
-            slowMo: 50, // Slows down Playwright operations by 50ms
-            devtools: true // Opens DevTools
+            slowMo: 50
         });
         
         this.context = await this.browser.newContext({

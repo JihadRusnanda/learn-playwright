@@ -14,7 +14,7 @@ export class LoginPage {
     }
 
     async navigate() {
-        await this.page.goto('/login');
+        await this.page.goto('https://stockbit.com');
     }
 
     async enterUsername(username: string) {

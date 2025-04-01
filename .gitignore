@@ -1,0 +1,18 @@
+# Test artifacts
+videos/
+cucumber-report.html
+playwright-report/
+
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db 
