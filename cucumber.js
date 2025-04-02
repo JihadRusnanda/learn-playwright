@@ -4,7 +4,7 @@ module.exports = {
         require: ['src/step-definitions/*.ts', 'src/support/*.ts'],
         paths: ['src/features/*.feature'],
         format: [
-            'progress-bar',
+            'progress',
             'html:cucumber-report.html'
         ],
         formatOptions: { snippetInterface: 'async-await' },
