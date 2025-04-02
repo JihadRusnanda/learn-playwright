@@ -1,20 +1,9 @@
 import { Page, Locator } from '@playwright/test';
 import { BasePage } from '../base/BasePage';
 import { Config } from '../../config/Config';
+import { login, loginValue, LoginSelectorKey } from '../../selectors/login.selectors';
 
 export class LoginPage extends BasePage {
-    private selectors = {
-        usernameInput: '#username',
-        passwordInput: '#password',
-        loginButton: '#login-button',
-        welcomeMessage: '.welcome-message',
-        landingLoginButton: 'cy_landing-login-button',
-        usernameField: 'id_username',
-        passwordField: 'id_password',
-        emailLoginButton: 'id_email-login-button',
-        investasiSahamHeader: "xpath_//h1[text()='Investasi Saham Bersama']"
-    };
-
     constructor(page: Page) {
         super(page);
     }
@@ -26,27 +15,29 @@ export class LoginPage extends BasePage {
 
     async login(username: string, password: string): Promise<void> {
         if (username) {
-            await this.fillInput(this.selectors.usernameInput, username);
+            await this.fillInput(login('usernameInput'), username);
         }
         if (password) {
-            await this.fillInput(this.selectors.passwordInput, password);
+            await this.fillInput(login('passwordInput'), password);
         }
         if (!username && !password) {
-            await this.clickElement(this.selectors.loginButton);
+            await this.clickElement(login('loginButton'));
             await this.waitForPageLoad();
         }
     }
 
     async LoginSecurites(username: string, password: string): Promise<void> {
-        await this.waitForElement(this.selectors.investasiSahamHeader);
-        await this.clickElement(this.selectors.landingLoginButton);
-        await this.fillInput(this.selectors.usernameField, username);
-        await this.fillInput(this.selectors.passwordField, password);
-        await this.clickElement(this.selectors.emailLoginButton);
+        const headerSelector = loginValue('investasiSahamHeader');
+        await this.waitForElement(headerSelector);
+        
+        await this.clickElement(login('landingLoginButton'));
+        await this.fillInput(login('usernameField'), username);
+        await this.fillInput(login('passwordField'), password);
+        await this.clickElement(login('emailLoginButton'));
         await this.waitForPageLoad();
     }
 
     getWelcomeMessage(): Locator {
-        return this.page.locator(this.selectors.welcomeMessage);
+        return this.page.locator(login('welcomeMessage'));
     }
 } 
