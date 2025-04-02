@@ -2,17 +2,38 @@
 videos/
 cucumber-report.html
 playwright-report/
+jest-results/
+screenshots/
+test-results/
 
 # Dependencies
 node_modules/
 
 # Environment variables
 .env
+.env.local
+.env.*.local
 
 # IDE files
 .vscode/
 .idea/
+.cursor/
 
 # OS files
 .DS_Store
-Thumbs.db 
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Coverage directory
+coverage/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/ 

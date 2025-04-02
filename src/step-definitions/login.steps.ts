@@ -1,38 +1,42 @@
-import { Given, When, Then, setDefaultTimeout } from '@cucumber/cucumber';
+import { Given, When, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
-import { LoginPage } from '../pages/login.page';
-import { CustomWorld } from '../support/world';
+import { LoginPage } from '../pages/login/LoginPage';
+import { createConfig } from '../config/Config';
 
-// Set default timeout to 30 seconds
-setDefaultTimeout(30 * 1000);
+Given('I am on the login page', async function() {
+    const page = await this.getPage();
+    const loginPage = new LoginPage(page);
+    await loginPage.navigate(createConfig());
+});
 
-let loginPage: LoginPage;
-
-Given('I am on the login page', async function(this: CustomWorld) {
-    try {
-        await this.init();
-        loginPage = new LoginPage(this.page);
-        await loginPage.navigate();
-    } catch (error) {
-        console.error('Error in Given step:', error);
-        throw error;
-    }
+Given('User login to securities using {string} account', async function(account: string) {
+    const page = await this.getPage();
+    const loginPage = new LoginPage(page);
+    await loginPage.LoginSecurites("jihad1", "stockbil");
 });
 
 When('I enter username {string}', async function(username: string) {
-    await loginPage.enterUsername(username);
+    const page = await this.getPage();
+    const loginPage = new LoginPage(page);
+    await loginPage.login(username, '');
 });
 
 When('I enter password {string}', async function(password: string) {
-    await loginPage.enterPassword(password);
+    const page = await this.getPage();
+    const loginPage = new LoginPage(page);
+    await loginPage.login('', password);
 });
 
-When('I click the login button', async function() {
-    await loginPage.clickLoginButton();
+When('I click login button', async function() {
+    const page = await this.getPage();
+    const loginPage = new LoginPage(page);
+    await loginPage.login('', '');
 });
 
-Then('I should be logged in successfully', async function(this: CustomWorld) {
+Then('I should see welcome message', async function() {
+    const page = await this.getPage();
+    const loginPage = new LoginPage(page);
     const welcomeMessage = loginPage.getWelcomeMessage();
     await expect(welcomeMessage).toBeVisible();
-    await this.cleanup();
+    await expect(welcomeMessage).toContainText('Welcome');
 }); 
