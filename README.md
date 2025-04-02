@@ -1,6 +1,6 @@
 # Playwright BDD Framework
 
-A modern test automation framework using Playwright with Cucumber for Behavior-Driven Development (BDD).
+A modern test automation framework using Playwright with Cucumber for Behavior-Driven Development (BDD) and Jest for unit testing.
 
 ## Features
 
@@ -12,6 +12,7 @@ A modern test automation framework using Playwright with Cucumber for Behavior-D
 - 🔍 Screenshot capture on failure
 - 🎯 Parallel test execution
 - 🔄 CI/CD integration with GitHub Actions
+- 🧪 Jest for unit testing
 
 ## Prerequisites
 
@@ -36,6 +37,10 @@ npm install
 ```bash
 npx playwright install
 ```
+
+4. Set up environment variables:
+   - Copy `.env.example` to `.env`
+   - Update the variables in `.env` with your configuration
 
 ## VS Code Setup for Cucumber
 
@@ -70,44 +75,69 @@ npx playwright install
 │   ├── step-definitions/  # Step definition files
 │   ├── pages/            # Page Object Models
 │   └── support/          # Support files and world.ts
-├── cucumber.js           # Cucumber configuration
-├── playwright.config.ts  # Playwright configuration
+├── jest-results/         # Jest test results and coverage reports
+├── screenshots/          # Test failure screenshots
+├── videos/              # Test execution videos
+├── cucumber.js          # Cucumber configuration
+├── playwright.config.ts # Playwright configuration
+├── tsconfig.json        # TypeScript configuration
+├── .env                 # Environment variables
 └── package.json         # Project dependencies
 ```
 
 ## Running Tests
 
-1. Run all tests:
+1. Run all BDD tests:
 ```bash
 npm test
 ```
 
-2. Run specific feature:
+2. Run tests in parallel:
+```bash
+npm run test:parallel
+```
+
+3. Run specific feature:
 ```bash
 npm test -- src/features/login.feature
 ```
 
-3. Run with specific tags:
+4. Run with specific tags:
 ```bash
 npm test -- --tags @smoke
 ```
 
-4. Run in headed mode:
+5. Run in headed mode:
 ```bash
 npm run test:headed
 ```
 
-5. Run in debug mode:
+6. Run in debug mode:
 ```bash
 npm run test:debug
+```
+
+7. Run unit tests:
+```bash
+npm run test:unit
 ```
 
 ## Test Reports
 
 After test execution, you can find:
-- HTML reports in `cucumber-report.html`
+- Cucumber HTML reports in `cucumber-report.html`
+- Jest test results and coverage reports in `jest-results/` directory
 - Test videos in `videos/` directory
 - Screenshots in `screenshots/` directory (on test failure)
+
+## Dependencies
+
+- @cucumber/cucumber: ^10.3.1
+- @playwright/test: ^1.42.1
+- cucumber-html-reporter: ^7.1.0
+- dotenv: ^16.4.5
+- jest: ^29.7.0
+- typescript: ^5.3.3
 
 ## GitHub Actions
 
