@@ -13,12 +13,15 @@ A modern test automation framework using Playwright with Cucumber for Behavior-D
 - 🎯 Parallel test execution
 - 🔄 CI/CD integration with GitHub Actions
 - 🧪 Jest for unit testing
+- 🚀 Local CI/CD testing with act
+- ⚡ Optimized CI/CD with dependency caching
 
 ## Prerequisites
 
 - Node.js (v16 or higher)
 - npm or yarn
 - VS Code (recommended)
+- Docker (for running GitHub Actions locally with act)
 
 ## Installation
 
@@ -41,6 +44,18 @@ npx playwright install
 4. Set up environment variables:
    - Copy `.env.example` to `.env`
    - Update the variables in `.env` with your configuration
+
+5. Install act (for running GitHub Actions locally):
+```bash
+# macOS
+brew install act
+
+# Linux
+curl https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
+
+# Windows (with Chocolatey)
+choco install act-cli
+```
 
 ## VS Code Setup for Cucumber
 
@@ -78,10 +93,15 @@ npx playwright install
 ├── jest-results/         # Jest test results and coverage reports
 ├── screenshots/          # Test failure screenshots
 ├── videos/              # Test execution videos
+├── artifacts/           # Local GitHub Actions artifacts
+├── .github/
+│   ├── workflows/       # GitHub Actions workflows
+│   └── actions/         # Reusable GitHub Actions
 ├── cucumber.js          # Cucumber configuration
 ├── playwright.config.ts # Playwright configuration
 ├── tsconfig.json        # TypeScript configuration
 ├── .env                 # Environment variables
+├── .secrets             # Secrets for local GitHub Actions runs
 └── package.json         # Project dependencies
 ```
 
@@ -122,6 +142,40 @@ npm run test:debug
 npm run test:unit
 ```
 
+8. Run web-specific tests:
+```bash
+npm run test:web
+```
+
+9. Run a specific scenario:
+```bash
+npm run test:scenario
+```
+
+## Running GitHub Actions Locally
+
+You can run GitHub Actions workflows locally using act:
+
+1. Run unit tests workflow:
+```bash
+act -j test -W .github/workflows/unit-tests.yml
+```
+
+2. Run feature tests workflow:
+```bash
+act -j test -W .github/workflows/feature-tests.yml
+```
+
+3. Run with artifact storage:
+```bash
+act -j test -W .github/workflows/unit-tests.yml --artifact-server-path ./artifacts
+```
+
+4. Run with environment variables and secrets:
+```bash
+act -j test -W .github/workflows/unit-tests.yml --env-file=.env --secret-file=.secrets
+```
+
 ## Test Reports
 
 After test execution, you can find:
@@ -129,6 +183,17 @@ After test execution, you can find:
 - Jest test results and coverage reports in `jest-results/` directory
 - Test videos in `videos/` directory
 - Screenshots in `screenshots/` directory (on test failure)
+- GitHub Actions artifacts in `artifacts/` directory (when running with act)
+
+## CI/CD Optimizations
+
+The project includes several optimizations for faster CI/CD execution:
+
+1. **Dependency Caching**: Node modules and Playwright browsers are cached between runs
+2. **Composite Actions**: Reusable setup steps to avoid duplication
+3. **Conditional Installation**: Dependencies are only installed when the cache is missed
+4. **Parallel Test Execution**: Tests can be run in parallel for faster execution
+5. **Optimized Artifact Handling**: Artifacts are only uploaded when necessary
 
 ## Dependencies
 
@@ -141,12 +206,15 @@ After test execution, you can find:
 
 ## GitHub Actions
 
-The project includes a GitHub Actions workflow that:
-- Runs tests on push to main branch
-- Runs tests on pull requests
-- Generates and uploads test reports as artifacts
-- Supports parallel test execution
-- Uses Node.js 18.x
+The project includes GitHub Actions workflows that:
+- Run unit tests on push to main branch
+- Run unit tests on pull requests
+- Run feature tests on push to main branch
+- Run feature tests on pull requests
+- Run specific feature scenarios
+- Generate and upload test reports as artifacts
+- Support parallel test execution
+- Use Node.js 18.x
 
 ## Contributing
 

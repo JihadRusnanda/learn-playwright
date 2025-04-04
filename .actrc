@@ -1,0 +1,5 @@
+--container-architecture linux/amd64
+--secret-file=.secrets
+--env-file=.env
+--container-daemon-socket /var/run/docker.sock
+--userns=host 

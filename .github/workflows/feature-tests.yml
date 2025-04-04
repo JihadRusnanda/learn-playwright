@@ -1,0 +1,89 @@
+name: Feature Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: 'Scenario to run'
+        required: true
+        default: '[Web] Sell From Real with auto rejection lower limit'
+
+jobs:
+  test:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Dependencies
+      uses: ./.github/actions/setup-dependencies
+      with:
+        node-version: '18'
+        cache-playwright: 'true'
+      
+    - name: Run specific feature scenario
+      run: |
+        # Use a simpler approach to get the scenario name
+        if [ -n "$SCENARIO_NAME" ]; then
+          SCENARIO_TO_RUN="$SCENARIO_NAME"
+        else
+          SCENARIO_TO_RUN="${{ github.event.inputs.scenario || '[Web] Sell From Real with auto rejection lower limit' }}"
+        fi
+        echo "Running scenario: $SCENARIO_TO_RUN"
+        
+        # Debug: List feature files
+        echo "Available feature files:"
+        find src/features -name "*.feature" -type f
+        
+        # Debug: Show feature file content
+        echo "Content of login.feature:"
+        cat src/features/login.feature
+        
+        # Run without name filter first to see all scenarios
+        echo "Running all scenarios to debug:"
+        npx cucumber-js --require src/step-definitions/*.ts --require src/support/*.ts src/features/login.feature --tags "@web"
+        
+        # Now run with name filter
+        echo "Running specific scenario:"
+        npx cucumber-js --require src/step-definitions/*.ts --require src/support/*.ts src/features/login.feature --tags "@web" --name "$SCENARIO_TO_RUN"
+      
+    - name: Upload test results
+      if: always()
+      run: |
+        if [ -n "$ACT" ]; then
+          echo "Skipping artifact upload in local run"
+        else
+          echo "Uploading test results"
+          # Use a simple upload approach for local runs
+          mkdir -p artifacts/cucumber-report
+          cp cucumber-report.html artifacts/cucumber-report/ || echo "No cucumber report found"
+        fi
+        
+    - name: Upload test videos
+      if: always()
+      run: |
+        if [ -n "$ACT" ]; then
+          echo "Skipping artifact upload in local run"
+        else
+          echo "Uploading test videos"
+          # Use a simple upload approach for local runs
+          mkdir -p artifacts/playwright-videos
+          cp -r videos/* artifacts/playwright-videos/ 2>/dev/null || echo "No videos found"
+        fi
+        
+    - name: Upload screenshots
+      if: always()
+      run: |
+        if [ -n "$ACT" ]; then
+          echo "Skipping artifact upload in local run"
+        else
+          echo "Uploading screenshots"
+          # Use a simple upload approach for local runs
+          mkdir -p artifacts/playwright-screenshots
+          cp -r screenshots/* artifacts/playwright-screenshots/ 2>/dev/null || echo "No screenshots found"
+        fi 

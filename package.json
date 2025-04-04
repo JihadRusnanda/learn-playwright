@@ -6,7 +6,9 @@
     "test": "cucumber-js",
     "test:parallel": "cucumber-js --parallel 2",
     "report": "node cucumber-html-report.js",
-    "test:unit": "jest --ci --coverage --outputDirectory=jest-results"
+    "test:unit": "mkdir -p jest-results && jest --ci --coverage --outputDirectory=jest-results",
+    "test:web": "cucumber-js --tags @web",
+    "test:scenario": "cucumber-js --name \"[Web] Sell From Real with auto rejection lower limit\""
   },
   "dependencies": {
     "@cucumber/cucumber": "^10.3.1",

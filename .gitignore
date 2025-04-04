@@ -5,6 +5,7 @@ playwright-report/
 jest-results/
 screenshots/
 test-results/
+artifacts/
 
 # Dependencies
 node_modules/
@@ -13,6 +14,7 @@ node_modules/
 .env
 .env.local
 .env.*.local
+.secrets
 
 # IDE files
 .vscode/
@@ -36,4 +38,7 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
-.cache/ 
+.cache/
+
+# Local run scripts
+run-local-*.sh 

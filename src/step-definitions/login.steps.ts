@@ -27,13 +27,13 @@ When('I enter password {string}', async function(password: string) {
     await loginPage.login('', password);
 });
 
-When('I click login button', async function() {
+When('I click the login button', async function() {
     const page = await this.getPage();
     const loginPage = new LoginPage(page);
     await loginPage.login('', '');
 });
 
-Then('I should see welcome message', async function() {
+Then('I should be logged in successfully', async function() {
     const page = await this.getPage();
     const loginPage = new LoginPage(page);
     const welcomeMessage = loginPage.getWelcomeMessage();

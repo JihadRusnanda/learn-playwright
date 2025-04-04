@@ -58,7 +58,7 @@ describe('LoginPage', () => {
       
       await loginPage.LoginSecurites(username, password);
       
-      expect(mockPage.waitForSelector).toHaveBeenCalledWith('xpath=//h1[text()=\'Investasi Saham Bersama\']', { timeout: 3000, state: 'visible' });
+      expect(mockPage.waitForSelector).toHaveBeenCalledWith('xpath=//h1[text()="Investasi Saham Bersama"]', { timeout: 3000, state: 'visible' });
       expect(mockPage.click).toHaveBeenCalledWith('[data-cy="landing-login-button"]');
       expect(mockPage.fill).toHaveBeenCalledWith('#username', username);
       expect(mockPage.fill).toHaveBeenCalledWith('#password', password);
