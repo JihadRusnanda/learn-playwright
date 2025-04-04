@@ -1,10 +1,8 @@
 name: Feature Tests
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight
   workflow_dispatch:
     inputs:
       scenario:
